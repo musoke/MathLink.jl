@@ -87,18 +87,24 @@ end
 
 function _defaultlink()
     if defaultlink.ptr == C_NULL
+        @debug "defaultlink uninitialised" defaultlink
         args = [
             "-linkname",
             "\"$mker\" -mathlink",
             "-linkmode",
             "launch",
         ]
+
         open!(defaultlink, args)
 
         # Ignore first input packet
         @assert nextpacket(defaultlink) == PKT_INPUTNAME
         newpacket(defaultlink)
+    else
+        @debug "defaultlink already initialised" defaultlink
     end
+
+    @debug "_defaultlink return value" defaultlink
     return defaultlink
 end
 
